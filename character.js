@@ -69,14 +69,20 @@ const checkClass=function(hero,characterClass)
       hero.skills.tackle++;
       break;
     case `thief`:
-      her.skills.attack--;
+      hero.skills.attack--;
       hero.skills.sneak+=3;
       hero.skills.tackle++;
       break;
     case `hunter`:
-      her.skills.attack+=3;
+      hero.skills.attack+=3;
       hero.skills.sneak++;
       hero.skills.tackle--;
+      hero.skills.mana--;
+      break;
+    case `slave`:
+      hero.skills.attack--;
+      hero.skills.sneak+=3;
+      hero.skills.tackle++;
       hero.skills.mana--;
       break;
     default:
@@ -110,6 +116,12 @@ const checkRace=function(hero,race)
         hero.skills.attack++;
         hero.barriers.mana--;
         hero.barriers.tackle++;
+        break;
+    case `demon`:
+        hero.skills.attack++;
+        hero.barriers.attack++;
+        hero.skills.mana++;
+        hero.barriers.sneak--;
         break;
     default:
         race=prompt(`${race} is not a valid race. Please choose again`);
