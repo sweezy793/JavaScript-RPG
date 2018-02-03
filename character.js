@@ -5,6 +5,7 @@ class BaseCharacter
     this.name=name;
     this.maxHealth=health;
     this.currentHealth=health;
+    this.isIncapacitated=false;
     this.barriers=
     {
       attack:10,
@@ -22,6 +23,26 @@ class BaseCharacter
 
     };
   }
+    attack()
+    {
+      return Math.floor(Math.random()*20)+1+this.skills.attack;
+    };
+    dealDamage()
+    {
+      return Mathe.floor(Math.random()*(this.equippedWeapon.maxDamage-this.equippedWeapon.minDamage+1))+this.equippedWeapon.minDamage;
+    };
+    sneak()
+    {
+      return Math.floor(Math.random()*20)+1+this.skills.sneak;
+    };
+    mana()
+    {
+      return Math.floor(Math.random()*20)+1+this.skills.mana;
+    };
+    tackle()
+    {
+      return Math.floor(Math.random()*20)+1+this.skills.tackle;
+    };
 };
 
 class Hero extends BaseCharacter
@@ -32,7 +53,7 @@ class Hero extends BaseCharacter
     this.gender=gender;
     this.race=race;
     this.characterRole=role;
-    this.isIncapacitated=false;
+
     this.equippedWeapon=
     {
       name: `None`,
@@ -42,8 +63,26 @@ class Hero extends BaseCharacter
     this.equippedArmor=
     {
       name:`None`,
-      hitBarrierBonus:null
+      attackBarrierBonus:null
     };
+  };
+  levelUp(skill)
+  {
+    this.maxHealth+=Math.floor(Math.random()*6)+1;
+    this.skills(skill)+=1;
+  };
+  equipNewWeapon(newWeapon)
+  {
+    this.equippedWeapon=newWeapon;
+  };
+  equipNewArmor(newArmor)
+  {
+    this.equippedArmor=newArmor;
+  };
+  rest()
+  {
+    this.currentHealth=this.maxHealth;
+    this.isIncapacitated=false;
   };
 };
 
@@ -53,7 +92,7 @@ const checkClass=function(hero,characterClass)
 
   switch (lowerCharacterClass) {
     case `warrior`:
-      her.skills.attack+=3;
+      hero.skills.attack+=3;
       hero.skills.sneak--;
       hero.skills.tackle++;
       break;
