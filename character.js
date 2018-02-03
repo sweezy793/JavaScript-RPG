@@ -1,6 +1,6 @@
 class BaseCharacter
 {
-  constructor(name,health)
+  constructor(name,health,skills={attack:0,sneak:0,mana:0,tackle:0})
   {
     this.name=name;
     this.maxHealth=health;
@@ -14,14 +14,8 @@ class BaseCharacter
       tackle:10,
 
     };
-    this.skills=
-    {
-      attack:0,
-      sneak:0,
-      mana:0,
-      tackle:0,
+    this.skills=skills;
 
-    };
   }
     attack()
     {
@@ -47,24 +41,22 @@ class BaseCharacter
 
 class Hero extends BaseCharacter
 {
-  constructor(name,health,gender,race,role)
+  constructor(name,health,gender,race,role,skills,
+    weapon={name:`None`,
+            maxDamage:null,
+            minDamage:null
+          },armor={
+            name:`None`,
+            attackBarrierBonus:null
+          })
   {
-    super(name,health);
+    super(name,health,skills);
     this.gender=gender;
     this.race=race;
     this.characterRole=role;
 
-    this.equippedWeapon=
-    {
-      name: `None`,
-      minDamage:null,
-      maxDamage:null
-    };
-    this.equippedArmor=
-    {
-      name:`None`,
-      attackBarrierBonus:null
-    };
+    this.equippedWeapon=weapon;
+    this.equippedArmor=armor;
   };
   levelUp(skill)
   {
@@ -168,4 +160,21 @@ const checkRace=function(hero,race)
         checkRace(hero,race);
         break;
   }
+};
+
+class Monster extends BaseCharacter
+{
+  constructor(name,health,attackBarrier,manaBarrier,sneakBarrier,tackleBarrier,skills,minDamage,maxDamage)
+  {
+    super(name, health, skills);
+    this.barriers.attackBarrier=attackBarrier;
+    this.barriers.manaBarrier=manaBarrier;
+    this.barriers.sneakBarrier=sneakBarrier;
+    this.barriers.tackleBarrier=tackleBarrier;
+    this.equippedWeapon={
+      minDamage:minDamage,
+      maxDamage:maxDamage
+    }
+
+  };
 };
